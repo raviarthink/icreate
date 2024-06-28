@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>icreate for Personal</title>
+    <style>
+        body {
+            background-color: #99ffcc; /* Adding background color */
+            font-family: Arial, sans-serif; /* Ensuring a standard font */
+            margin: 0; /* Removing default margin */
+            padding: 20px; /* Adding padding for content */
+        }
+        .container {
+            background-color: #ffffff; /* Container background color */
+            padding: 20px;
+            border-radius: 10px; /* Adding rounded corners */
+            box-shadow: 0 0 10px rgba(0,0,0,0.1); /* Adding a slight shadow */
+        }
+        .go-back {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: #f0f0f0; /* Button background color */
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            color: #333;
+        }
+        .go-back:hover {
+            background-color: #e0e0e0; /* Darker background color on hover */
+        }
+        .uploaded-image {
+            max-width: 100%;
+            height: auto;
+            max-height: 300px; /* Set maximum height to ensure uniform display */
+        }
+    </style>
+</head>
+<body>
+    <a href="javascript:history.back()" class="go-back">Go Back</a>
+    <div class="container">
+        <h2>icreate for Personal - Explore and Compare</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <h3>Explore</h3>
+                <form method="POST" enctype="multipart/form-data">
+                    <input type="hidden" name="operation" value="explore">
+                    <input type="file" name="image" accept="image/*" required><br><br>
+                    <textarea name="prompt" rows="4" cols="50" placeholder="Enter your prompt"></textarea><br><br>
+                    <button type="submit">Explore Image</button>
+                </form>
+                {% if explore_image %}
+                    <h4>Uploaded Image:</h4>
+                    <img src="data:image/jpeg;base64,{{ explore_image }}" class="uploaded-image">
+                {% endif %}
+                {% if explore_response %}
+                    <h4>Response:</h4>
+                    <div>{{ explore_response|safe }}</div>
+                {% endif %}
+            </div>
+            <div class="col-md-6">
+                <h3>Compare</h3>
+                <form method="POST" enctype="multipart/form-data">
+                    <input type="hidden" name="operation" value="compare">
+                    <input type="file" name="image1" accept="image/*" required><br><br>
+                    <input type="file" name="image2" accept="image/*" required><br><br>
+                    <textarea name="prompt" rows="4" cols="50" placeholder="Enter your prompt"></textarea><br><br>
+                    <button type="submit">Compare Images</button>
+                </form>
+                {% if compare_images %}
+                    <h4>Uploaded Images:</h4>
+                    <img src="data:image/jpeg;base64,{{ compare_images[0] }}" class="uploaded-image">
+                    <img src="data:image/jpeg;base64,{{ compare_images[1] }}" class="uploaded-image">
+                {% endif %}
+                {% if compare_response %}
+                    <h4>Response:</h4>
+                    <div>{{ compare_response|safe }}</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>
