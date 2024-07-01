@@ -6,10 +6,18 @@
     <title>icreate for Industries</title>
     <style>
         body {
-            background-color: #99ffcc; /* Adding background color */
+            background-image: url('/static/images/background.jpg'); 
             font-family: Georgia, 'Times New Roman', Times, serif; /* Ensuring a standard font */
             margin: 0; /* Removing default margin */
             padding: 20px; /* Adding padding for content */
+            background-size: cover;
+        }
+        .container {
+            background-color: #ffffff; /* Container background color */
+            padding: 30px;
+            margin-top: 50px;
+            border-radius: 10px; /* Adding rounded corners */
+            box-shadow: 0 0 10px rgba(0,0,0,0.1); /* Adding a slight shadow */
         }
         /* Optional: Add custom styles for the carousel */
         .carousel-container {
@@ -31,13 +39,13 @@
             padding: 10px 20px;
             margin-top: 5px;
             text-decoration: none;
-            background-color: #007bff; /* Bootstrap primary blue color */
+            background-color: #667BC6; /* Bootstrap primary blue color */
             color: #fff; /* White text color */
             border-radius: 5px;
             transition: background-color 0.3s ease;
         }
         .btn:hover {
-            background-color: #0056b3; /* Darker shade of blue on hover */
+            background-color: #667BC6; /* Darker shade of blue on hover */
         }
 
         .carousel-btn {
@@ -57,12 +65,22 @@
         .carousel-btn-right {
             right: 10px; /* Position right arrow */
         }
+        .logout {
+            position: absolute;
+            top: 20px; /* Adjust top position */
+            right: 20px; /* Adjust right position */
+            font-size: 1rem;
+        }
     </style>
 </head>
 <body>
+    <div class="logout">
+        <a href="{{ url_for('index') }}" class="btn btn-secondary">Logout</a>
+    </div>
+    <a class="btn" href="{{ url_for('icreate') }}">Go back</a>
     <div class="container">
-        <center><h2>Icreate for Industries - Image Carousel</h2></center>
-         <a class="btn" href="{{ url_for('icreate') }}">Go back</a>
+        <center><h2 style="color: #071952;">Icreate for Industries - Image Carousel</h2></center>
+        
         <div class="carousel-container">
             <div class="carousel-images">
                 {% for image in carousel_images %}

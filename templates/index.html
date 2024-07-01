@@ -41,12 +41,38 @@
         .btn:hover {
             background-color: #0056b3; /* Darker shade of blue on hover */
         }
+        .login-btn {
+    justify-content: center;
+    flex-direction: row;
+    display: flex;
+    background-color: rgb(255, 255, 255);
+    justify-content: center;
+    align-items: center;
+    width: 220px;
+    padding: 10px;
+    box-shadow: 3px 3px 3px rgb(170, 170, 170);
+    border-radius: 15px;
+}
+.btn-text {
+    justify-content: center;
+    padding: 10px;
+    font-family: 'Poppins', sans-serif;
+    color: rgb(85, 85, 85);
+}
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="container" align="center">
         <h1>Welcome to Icreate - Add wings to your creativity</h1>
-        <a class="btn" href="{{ url_for('icreate') }}">Get Started</a>
+            <a href="google/" class="login-btn" style="text-decoration:none;">
+                <img id="google" src="https://www.outsystems.com/Forge_CW/_image.aspx/Q8LvY--6WakOw9afDCuuGbSRbewerkJ3wQDZCrCmiSk=/google-login-reactive-2023-01-04%2000-00-00-2024-03-28%2011-05-55"
+            alt="Google"
+            style="width:50px;height:50px;">
+            <div class="btn-text">
+                Login with Google
+            </div>
+            </a> 
+        </div>
     </div>
 </body>
 </html>
