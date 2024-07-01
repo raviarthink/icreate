@@ -3,84 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>icreate for Personal</title>
+    <title>icreate for Industries</title>
     <style>
         body {
-            background-color: #99ffcc; /* Background color for the entire page */
-            font-family: Arial, sans-serif; /* Standard font */
-            margin: 0; /* Remove default margin */
-            padding: 20px; /* Add padding for content */
+            background-color: #99ffcc; /* Adding background color */
+            font-family: Georgia, 'Times New Roman', Times, serif; /* Ensuring a standard font */
+            margin: 0; /* Removing default margin */
+            padding: 20px; /* Adding padding for content */
         }
-        .go-back {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            background-color: #007bff; /* Button background color */
-            color: #ffffff; /* Button text color */
+        /* Optional: Add custom styles for the carousel */
+        .carousel-container {
+            width: 80%; /* Adjust as needed */
+            margin: auto;
+            overflow: hidden;
+            position: relative;
+        }
+        .carousel-images {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+        .carousel-image {
+            min-width: 100%; /* Adjust based on image aspect ratio */
+            object-fit: cover;
+        }
+        .btn {
+            display: inline-block;
             padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
+            margin-top: 5px;
             text-decoration: none;
+            background-color: #007bff; /* Bootstrap primary blue color */
+            color: #fff; /* White text color */
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
         }
-        .go-back:hover {
-            background-color: #0056b3; /* Darker background color on hover */
+        .btn:hover {
+            background-color: #0056b3; /* Darker shade of blue on hover */
         }
-        .container {
-            background-color: #ffffff; /* Container background color */
-            padding: 20px;
-            border-radius: 10px; /* Rounded corners for the container */
-            box-shadow: 0 0 10px rgba(0,0,0,0.1); /* Slight shadow for the container */
+
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            font-size: 24px; /* Adjust the font size for larger arrows */
+            color: white; /* Optional: Change arrow color */
+            background-color: rgba(0, 0, 0, 0.5); /* Optional: Background color for arrows */
+            padding: 10px; /* Optional: Padding around arrows */
+            border-radius: 5px; /* Optional: Rounded corners for arrows */
         }
-        .uploaded-image {
-            max-width: 100%;
-            height: auto;
-            max-height: 300px; /* Set maximum height to ensure uniform display */
+        .carousel-btn-left {
+            left: 10px; /* Position left arrow */
+        }
+        .carousel-btn-right {
+            right: 10px; /* Position right arrow */
         }
     </style>
 </head>
 <body>
-    <a href="icreate.html" class="go-back">Go Back</a>
     <div class="container">
-        <h2>icreate for Personal - Explore and Compare</h2>
-        <div class="row">
-            <div class="col-md-6">
-                <h3>Explore</h3>
-                <form method="POST" enctype="multipart/form-data">
-                    <input type="hidden" name="operation" value="explore">
-                    <input type="file" name="image" accept="image/*" required><br><br>
-                    <textarea name="prompt" rows="4" cols="50" placeholder="Enter your prompt"></textarea><br><br>
-                    <button type="submit">Explore Image</button>
-                </form>
-                {% if explore_image %}
-                    <h4>Uploaded Image:</h4>
-                    <img src="data:image/jpeg;base64,{{ explore_image }}" class="uploaded-image">
-                {% endif %}
-                {% if explore_response %}
-                    <h4>Response:</h4>
-                    <div>{{ explore_response|safe }}</div>
-                {% endif %}
+        <center><h2>Icreate for Industries - Image Carousel</h2></center>
+         <a class="btn" href="{{ url_for('icreate') }}">Go back</a>
+        <div class="carousel-container">
+            <div class="carousel-images">
+                {% for image in carousel_images %}
+                    <img class="carousel-image" src="{{ url_for('static', filename=image) }}" alt="Image {{ loop.index }}">
+                {% endfor %}
             </div>
-            <div class="col-md-6">
-                <h3>Compare</h3>
-                <form method="POST" enctype="multipart/form-data">
-                    <input type="hidden" name="operation" value="compare">
-                    <input type="file" name="image1" accept="image/*" required><br><br>
-                    <input type="file" name="image2" accept="image/*" required><br><br>
-                    <textarea name="prompt" rows="4" cols="50" placeholder="Enter your prompt"></textarea><br><br>
-                    <button type="submit">Compare Images</button>
-                </form>
-                {% if compare_images %}
-                    <h4>Uploaded Images:</h4>
-                    <img src="data:image/jpeg;base64,{{ compare_images[0] }}" class="uploaded-image">
-                    <img src="data:image/jpeg;base64,{{ compare_images[1] }}" class="uploaded-image">
-                {% endif %}
-                {% if compare_response %}
-                    <h4>Response:</h4>
-                    <div>{{ compare_response|safe }}</div>
-                {% endif %}
-            </div>
+            <div class="carousel-btn carousel-btn-left" onclick="moveCarousel('left')">&#10094;</div>
+            <div class="carousel-btn carousel-btn-right" onclick="moveCarousel('right')">&#10095;</div>
         </div>
     </div>
+
+    <script>
+        let currentIndex = 0;
+        const images = document.querySelectorAll('.carousel-image');
+        const totalImages = images.length;
+
+        function moveCarousel(direction) {
+            if (direction === 'left') {
+                currentIndex = (currentIndex - 1 + totalImages) % totalImages;
+            } else if (direction === 'right') {
+                currentIndex = (currentIndex + 1) % totalImages;
+            }
+
+            const offset = -currentIndex * 100;
+            document.querySelector('.carousel-images').style.transform = `translateX(${offset}%)`;
+        }
+    </script>
 </body>
 </html>
