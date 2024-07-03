@@ -48,6 +48,16 @@
             right: 20px; /* Adjust right position */
             font-size: 1rem;
         }
+        .row {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+        .col-md-6 {
+            flex: 1;
+            min-width: 200px;
+            padding: 10px;
+        }
     </style>
 </head>
 <body>
@@ -63,6 +73,9 @@
             <div class="col-md-6">
                 <a class="btn" href="{{ url_for('industries') }}">Icreate for Industries</a>
             </div>
+            <div class="col-md-6">
+                <a class="btn" href="{{ url_for('knowledge') }}">Icreate Knowledge Hub</a>
+            </div>
         </div>
     </div>
 
@@ -76,13 +89,10 @@
         // Set greeting based on the time of day
         if (hour >= 5 && hour < 12) {
             greetingElement.innerHTML = 'Good Morning, {{ user_name }}<br>Unlock Your Creative Potential: Expand, Explore, and Evolve!';
-
         } else if (hour >= 12 && hour < 16) {
             greetingElement.innerHTML = 'Good Afternoon, {{ user_name }}<br>Unlock Your Creative Potential: Expand, Explore, and Evolve!';
         } else {
             greetingElement.innerHTML = 'Good Evening, {{ user_name }}<br>Unlock Your Creative Potential: Expand, Explore, and Evolve!';
-
-
         }
     </script>
 </body>

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Icreate Knowledge Hub</title>
+    <style>
+        body {
+            background-image: url('/static/images/background.jpg'); 
+            font-family: Georgia, 'Times New Roman', Times, serif; /* Ensuring a standard font */
+            margin: 0; /* Removing default margin */
+            padding: 20px; /* Adding padding for content */
+            background-size: cover;
+        }
+        .container {
+            background-color: #ffffff; /* Container background color */
+            padding: 30px;
+            margin-top: 50px;
+            border-radius: 10px; /* Adding rounded corners */
+            box-shadow: 0 0 10px rgba(0,0,0,0.1); /* Adding a slight shadow */
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-top: 5px;
+            text-decoration: none;
+            background-color: #667BC6; /* Bootstrap primary blue color */
+            color: #fff; /* White text color */
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .btn:hover {
+            background-color: #5a68a5; /* Darker shade of blue on hover */
+        }
+        .logout {
+            position: absolute;
+            top: 20px; /* Adjust top position */
+            right: 20px; /* Adjust right position */
+            font-size: 1rem;
+        }
+        .uploaded-images {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+        }
+        .uploaded-image-container {
+            width: 200px; /* Fixed width for each image container */
+            height: 200px; /* Fixed height for each image container */
+            overflow: hidden; /* Ensure images don't overflow */
+            border-radius: 5px; /* Add rounded corners */
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Add a slight shadow */
+        }
+        .uploaded-image {
+            width: 100%; /* Ensure images take full width of their container */
+            height: 100%; /* Ensure images take full height of their container */
+            object-fit: cover; /* Cover the container without stretching */
+        }
+        .submit-arrow {
+            background-color: #667BC6; /* Bootstrap primary blue color */
+            color: #fff; /* White text color */
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .submit-arrow:hover {
+            background-color: #5a68a5; /* Darker shade of blue on hover */
+        }
+    </style>
+    <script>
+        function submitLanguage() {
+            var language = document.getElementById('language-input').value;
+            if (language) {
+                document.getElementById('chosen-language').innerText = 'Language chosen is ' + language;
+                document.getElementById('chosen-language').style.display = 'block';
+                document.getElementById('upload-section').style.display = 'block';
+            }
+        }
+
+        function toggleTextarea() {
+            var textarea = document.getElementById('promptTextarea');
+            var hiddenInput = document.getElementById('operation');
+            if (textarea.style.display === 'none') {
+                textarea.style.display = 'block';
+                hiddenInput.value = 'ask';
+                document.getElementById('submit-arrow').style.display = 'inline-block'; // Show submit arrow
+            } else {
+                textarea.style.display = 'none';
+                hiddenInput.value = 'discover';
+                document.getElementById('submit-arrow').style.display = 'none'; // Hide submit arrow
+            }
+        }
+
+        function setOperation(value) {
+            document.getElementById('operation').value = value;
+        }
+    </script>
+</head>
+<body>
+    <div class="logout">
+        <a href="{{ url_for('index') }}" class="btn btn-secondary">Logout</a>
+    </div>
+    <a class="btn" href="{{ url_for('icreate') }}">Go back</a>
+    <div class="container">
+        <center><h2 style="color: #071952;">Icreate Knowledge Hub lets you know more about the Nature<br>All you have to do is "Capture. Share. Discover."</h2></center>
+
+        <div>
+            <h3>Know it in your language</h3>
+            <form method="POST" enctype="multipart/form-data" action="{{ url_for('knowledge') }}">
+                <input type="hidden" name="operation" id="operation" value="discover">
+                <input type="text" id="language-input" name="language-input" placeholder="Enter language"><br><br>
+                <button type="button" class="btn" onclick="submitLanguage()">Submit Language</button>
+                <h4 id="chosen-language" style="display: none;"></h4>
+
+                <div id="upload-section" style="display: none;">
+                    <h3>Upload the images below</h3>
+                    <input type="file" name="images" accept="image/*" multiple required><br><br>
+                    <textarea name="prompt" id="promptTextarea" rows="4" cols="50" placeholder="Enter your prompt" style="display: none;"></textarea>
+                    <button type="button" class="submit-arrow" id="submit-arrow" style="display: none;" onclick="this.form.submit();">➔</button><br><br>
+                    <button type="button" class="btn" onclick="setOperation('discover'); this.form.submit();">Discover</button>
+                    <button type="button" class="btn" onclick="toggleTextarea();">Ask Yourself</button>
+                </div>
+            </form>
+
+            {% if discover_images %}
+                <h4>Uploaded Images:</h4>
+                <div class="uploaded-images">
+                    {% for image in discover_images %}
+                        <div class="uploaded-image-container">
+                            <img src="data:image/jpeg;base64,{{ image }}" class="uploaded-image">
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            {% if discover_response %}
+                <h4>Response:</h4>
+                <div>{{ discover_response|safe }}</div>
+            {% endif %}
+
+            <!-- Display uploaded images for "Ask Yourself" -->
+            {% if ask_images %}
+                <h4>Uploaded Images:</h4>
+                <div class="uploaded-images">
+                    {% for image in ask_images %}
+                        <div class="uploaded-image-container">
+                            <img src="data:image/jpeg;base64,{{ image }}" class="uploaded-image">
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            {% if ask_response %}
+                <h4>Response:</h4>
+                <div>{{ ask_response|safe }}</div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

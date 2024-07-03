@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>icreate for Personal</title>
+    <title>Icreate for Personal</title>
     <style>
         body {
             background-image: url('/static/images/background.jpg'); 
@@ -76,7 +76,7 @@
                     <input type="hidden" name="operation" value="explore">
                     <input type="file" name="image" accept="image/*" required><br><br>
                     <textarea name="prompt" rows="4" cols="50" placeholder="Enter your prompt"></textarea><br><br>
-                    <button type="submit">Explore Image</button>
+                    <button type="submit" class="btn">Explore Image</button>
                 </form>
                 {% if explore_image %}
                     <h4>Uploaded Image:</h4>
@@ -94,7 +94,7 @@
                     <input type="file" name="image1" accept="image/*" required><br><br>
                     <input type="file" name="image2" accept="image/*" required><br><br>
                     <textarea name="prompt" rows="4" cols="50" placeholder="Enter your prompt"></textarea><br><br>
-                    <button type="submit">Compare Images</button>
+                    <button type="submit" class="btn">Compare Images</button>
                 </form>
                 {% if compare_images %}
                     <h4>Uploaded Images:</h4>
