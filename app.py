@@ -138,8 +138,16 @@ def industries():
     ]
     return render_template('industries.html', carousel_images=carousel_images)
 
+@app.route('/icreate/knowledge_hub')
+def knowledge_hub():
+    return render_template('knowledge_hub.html')
 
-@app.route('/icreate/knowledge', methods=['GET', 'POST'])
+
+@app.route('/icreate/knowledge_hub/capture')
+def capture():
+    return render_template('capture.html')
+
+@app.route('/icreate/knowledge_hub/knowledge', methods=['GET', 'POST'])
 def knowledge():
     if request.method == 'POST':
         language = request.form.get('language-input')
@@ -168,12 +176,6 @@ def knowledge():
                     return render_template('knowledge.html', ask_response=response_html, ask_images=base64_images)
 
     return render_template('knowledge.html')
-
-
-
-
-
-
 
 @app.route('/google/')
 def google():
